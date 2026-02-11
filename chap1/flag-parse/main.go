@@ -1,4 +1,4 @@
-package flagparse
+// package flagparse
 package main
 
 import (
