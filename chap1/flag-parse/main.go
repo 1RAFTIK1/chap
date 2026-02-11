@@ -13,15 +13,6 @@ type config struct {
 	numTimes   int
 }
 
-var usageString = fmt.Sprintf(`Usage: %s <integer> [-h|-help]
-
-A greeter application which prints the name you entered <integer> number of times.
-`, os.Args[0])
-
-func printUsage(w io.Writer) {
-	fmt.Fprintf(w, "%s", usageString)
-}
-
 func validateArgs(c config) error {
 	if !(c.numTimes > 0) {
 		return errors.New("Must specify a number greater than 0")
@@ -67,11 +58,6 @@ func greetUser(c config, name string, w io.Writer) {
 }
 
 func runCmd(r io.Reader, w io.Writer, c config) error {
-	// if c.printUsage {
-	// 	printUsage(w)
-	// 	return nil
-	// }
-
 	name, err := getName(r, w)
 	if err != nil {
 		return err
@@ -84,13 +70,11 @@ func main() {
 	c, err := parseArgs(os.Stderr, os.Args[1:])
 	if err != nil {
 		fmt.Fprintln(os.Stdout, err)
-		printUsage(os.Stdout)
 		os.Exit(1)
 	}
 	err = validateArgs(c)
 	if err != nil {
 		fmt.Fprintln(os.Stdout, err)
-		printUsage(os.Stdout)
 		os.Exit(1)
 	}
 
